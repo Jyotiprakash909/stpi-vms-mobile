@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "718518242000",
+    "project_id": "stpi-vms",
+    "storage_bucket": "stpi-vms.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:718518242000:android:638cbc1393ce377edaecd5",
+        "android_client_info": {
+          "package_name": "com.anonymous.mobileapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAY-K0jUWmvekpdS45FKzcCjdhStbCFgxc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

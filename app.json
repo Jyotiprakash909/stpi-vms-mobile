@@ -1,0 +1,61 @@
+{
+  "expo": {
+    "name": "STPI-VMS",
+    "slug": "stpi-vms",
+    "scheme": "stpivms",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "plugins": [
+      [
+        "expo-notifications",
+        {
+          "defaultChannel": "visitor-alerts-v2",
+          "sounds": [
+            "./assets/sounds/notification.mp3"
+          ],
+          "enableBackgroundRemoteNotifications": true
+        }
+      ],
+      "@react-native-community/datetimepicker"
+    ],
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "googleServicesFile": "./google-services.json",
+      "permissions": [
+        "POST_NOTIFICATIONS",
+        "VIBRATE",
+        "WAKE_LOCK",
+        "USE_FULL_SCREEN_INTENT"
+      ],
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "edgeToEdgeEnabled": true,
+      "package": "com.anonymous.mobileapp"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "0dd57c4b-3532-4c4e-ba28-33007e1c8e2f"
+      }
+    },
+    "owner": "jyoti_new"
+
+  }
+}
