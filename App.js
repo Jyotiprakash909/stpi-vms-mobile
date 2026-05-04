@@ -30,8 +30,8 @@ import ScheduleMeetingScreen from './screens/ScheduleMeetingScreen';
 // IMPORTANT: Replace with your computer's local IP address when running on a physical device.
 const BASE_URL = "https://stpi-vms-backend.onrender.com";
 const API_BASE = `${BASE_URL}/api`;
-const VISITOR_ALERT_CHANNEL_ID = 'visitor-alerts-v2';
-const LEGACY_VISITOR_ALERT_CHANNEL_ID = 'visitor-alerts';
+const VISITOR_ALERT_CHANNEL_ID = 'visitor-alerts-v3';
+const LEGACY_VISITOR_ALERT_CHANNEL_ID = 'visitor-alerts-v2';
 const VISITOR_ALERT_CATEGORY_ID = 'visitorrequestactions';
 const APPROVE_ACTION_ID = 'VISITOR_APPROVE';
 const REJECT_ACTION_ID = 'VISITOR_REJECT';
@@ -139,17 +139,22 @@ export default function App() {
 
   const loadAppAssets = async () => {
     try {
-      await Promise.all([
-        Font.loadAsync(Ionicons.font),
-        Audio.setAudioModeAsync({
-          playsInSilentModeIOS: true,
-          staysActiveInBackground: true,
-          shouldDuckAndroid: false,
-          interruptionModeAndroid: InterruptionModeAndroid.DoNotMix,
-          interruptionModeIOS: InterruptionModeIOS.DoNotMix,
-          playThroughEarpieceAndroid: false,
-        }),
-      ]);
+      // Load Ionicons font
+      await Font.loadAsync({
+        'ionicons': require('@expo/vector-icons/build/vendor/react-native-vector-icons/Fonts/Ionicons.ttf'),
+      });
+
+      // Configure audio for high-priority notification ringing
+      await Audio.setAudioModeAsync({
+        playsInSilentModeIOS: true,
+        staysActiveInBackground: true,
+        shouldDuckAndroid: false,
+        interruptionModeAndroid: InterruptionModeAndroid.DoNotMix,
+        interruptionModeIOS: InterruptionModeIOS.DoNotMix,
+        playThroughEarpieceAndroid: false,
+      });
+      
+      console.log('App assets loaded successfully');
     } catch (error) {
       console.error('App asset preload failed:', error);
     } finally {
@@ -190,7 +195,7 @@ export default function App() {
           name: 'Visitor Alerts',
           description: 'Urgent visitor approval requests',
           importance: Notifications.AndroidImportance.MAX,
-          sound: 'notification',  // matches filename without extension: assets/sounds/notification.mp3
+          sound: 'notification', // Matches android/app/src/main/res/raw/notification.mp3
           vibrationPattern: [0, 400, 300, 400, 300, 500],
           enableVibrate: true,
           enableLights: true,
@@ -199,7 +204,7 @@ export default function App() {
           bypassDnd: true,
           lockscreenVisibility: Notifications.AndroidNotificationVisibility.PUBLIC,
           audioAttributes: {
-            usage: Notifications.AndroidAudioUsage.NOTIFICATION, // Changed from ALARM to NOTIFICATION
+            usage: Notifications.AndroidAudioUsage.NOTIFICATION,
             contentType: Notifications.AndroidAudioContentType.SONIFICATION,
           },
         });
@@ -301,24 +306,22 @@ export default function App() {
         alarmSoundRef.current = null;
       }
 
+      // Check if asset is available
       const { sound } = await Audio.Sound.createAsync(
-  NOTIFICATION_SOUND,
-  {
-    shouldPlay: true,
-    isLooping: true,
-    volume: 1.0,
-  },
-  (status) => {
-    if (status.didJustFinish) {
-      console.log("Finished");
-    }
-  }
-);
+        NOTIFICATION_SOUND,
+        {
+          shouldPlay: true,
+          isLooping: true,
+          volume: 1.0,
+        }
+      );
 
       alarmSoundRef.current = sound;
       console.log('Alarm sound and vibration started');
     } catch (error) {
       console.error('Alarm sound playback failed:', error);
+      // Fallback: Just vibration if sound fails
+      Vibration.vibrate(VIBRATION_PATTERN, true);
     }
 
     // Safety timeout: stop after 2 minutes

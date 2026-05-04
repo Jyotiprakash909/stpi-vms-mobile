@@ -10,12 +10,12 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
-    "newArchEnabled": true,
+    "newArchEnabled": false,
     "plugins": [
       [
         "expo-notifications",
         {
-          "defaultChannel": "visitor-alerts-v2",
+          "defaultChannel": "visitor-alerts-v3",
           "sounds": [
             "./assets/sounds/notification.mp3"
           ],
@@ -45,7 +45,7 @@
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
-      "package": "com.anonymous.mobileapp"
+      "package": "com.stpivms"
     },
     "web": {
       "favicon": "./assets/favicon.png"
